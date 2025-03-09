@@ -1,9 +1,10 @@
 const { EmbedBuilder, InteractionType } = require('discord.js');
 const { useQueue } = require('discord-player');
 const { Translate } = require('../../process_tools');
+const { MessageFlags } = require('discord.js');
 
 module.exports = async (client, inter) => {
-    await inter.deferReply({ ephemeral: true });
+    await inter.deferReply({ flags: MessageFlags.Ephemeral });
     if (inter.type === InteractionType.ApplicationCommand) {
         const DJ = client.config.opt.DJ;
         const command = client.commands.get(inter.commandName);
@@ -17,7 +18,7 @@ module.exports = async (client, inter) => {
         }
 
         if (command.permissions && !inter.member.permissions.has(command.permissions)) {
-            errorEmbed.setDescription(await Translate(`<❌> | You need do not have the proper permissions to exacute this command`));
+            errorEmbed.setDescription(await Translate(`<❌> | You need do not have the proper permissions to execute this command`));
             return inter.editReply({ embeds: [errorEmbed], ephemeral: true });
         }
 
